@@ -46,6 +46,21 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(nullable: true)]
     private ?bool $banni = null;
 
+    #[ORM\ManyToOne(inversedBy: 'utilisateurs')]
+    private ?Internaute $internaute = null;
+
+    #[ORM\ManyToOne(inversedBy: 'utilisateurs')]
+    private ?Prestataire $prestataire = null;
+
+    #[ORM\ManyToOne(inversedBy: 'utilisateurs')]
+    private ?Commune $commune = null;
+
+    #[ORM\ManyToOne(inversedBy: 'utilisateurs')]
+    private ?Localite $localite = null;
+
+    #[ORM\ManyToOne(inversedBy: 'utilisateurs')]
+    private ?CodePostal $codePostal = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -184,6 +199,66 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     public function setBanni(?bool $banni): self
     {
         $this->banni = $banni;
+
+        return $this;
+    }
+
+    public function getInternaute(): ?Internaute
+    {
+        return $this->internaute;
+    }
+
+    public function setInternaute(?Internaute $internaute): self
+    {
+        $this->internaute = $internaute;
+
+        return $this;
+    }
+
+    public function getPrestataire(): ?Prestataire
+    {
+        return $this->prestataire;
+    }
+
+    public function setPrestataire(?Prestataire $prestataire): self
+    {
+        $this->prestataire = $prestataire;
+
+        return $this;
+    }
+
+    public function getCommune(): ?Commune
+    {
+        return $this->commune;
+    }
+
+    public function setCommune(?Commune $commune): self
+    {
+        $this->commune = $commune;
+
+        return $this;
+    }
+
+    public function getLocalite(): ?Localite
+    {
+        return $this->localite;
+    }
+
+    public function setLocalite(?Localite $localite): self
+    {
+        $this->localite = $localite;
+
+        return $this;
+    }
+
+    public function getCodePostal(): ?CodePostal
+    {
+        return $this->codePostal;
+    }
+
+    public function setCodePostal(?CodePostal $codePostal): self
+    {
+        $this->codePostal = $codePostal;
 
         return $this;
     }

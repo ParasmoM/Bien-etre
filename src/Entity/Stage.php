@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\StageRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -37,6 +39,14 @@ class Stage
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $affichageJusque = null;
+
+    #[ORM\ManyToMany(targetEntity: Prestataire::class, mappedBy: 'stage')]
+    private Collection $prestataires;
+
+    public function __construct()
+    {
+        $this->prestataires = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -135,6 +145,33 @@ class Stage
     public function setAffichageJusque(?\DateTimeInterface $affichageJusque): self
     {
         $this->affichageJusque = $affichageJusque;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Prestataire>
+     */
+    public function getPrestataires(): Collection
+    {
+        return $this->prestataires;
+    }
+
+    public function addPrestataire(Prestataire $prestataire): self
+    {
+        if (!$this->prestataires->contains($prestataire)) {
+            $this->prestataires->add($prestataire);
+            $prestataire->addStage($this);
+        }
+
+        return $this;
+    }
+
+    public function removePrestataire(Prestataire $prestataire): self
+    {
+        if ($this->prestataires->removeElement($prestataire)) {
+            $prestataire->removeStage($this);
+        }
 
         return $this;
     }

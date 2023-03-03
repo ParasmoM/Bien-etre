@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\PromotionRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -34,6 +36,17 @@ class Promotion
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $afficheJusque = null;
+
+    #[ORM\ManyToOne(inversedBy: 'promotions')]
+    private ?Categories $categorie = null;
+
+    #[ORM\ManyToMany(targetEntity: Prestataire::class, mappedBy: 'promotion')]
+    private Collection $prestataires;
+
+    public function __construct()
+    {
+        $this->prestataires = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -120,6 +133,45 @@ class Promotion
     public function setAfficheJusque(?\DateTimeInterface $afficheJusque): self
     {
         $this->afficheJusque = $afficheJusque;
+
+        return $this;
+    }
+
+    public function getCategorie(): ?Categories
+    {
+        return $this->categorie;
+    }
+
+    public function setCategorie(?Categories $categorie): self
+    {
+        $this->categorie = $categorie;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Prestataire>
+     */
+    public function getPrestataires(): Collection
+    {
+        return $this->prestataires;
+    }
+
+    public function addPrestataire(Prestataire $prestataire): self
+    {
+        if (!$this->prestataires->contains($prestataire)) {
+            $this->prestataires->add($prestataire);
+            $prestataire->addPromotion($this);
+        }
+
+        return $this;
+    }
+
+    public function removePrestataire(Prestataire $prestataire): self
+    {
+        if ($this->prestataires->removeElement($prestataire)) {
+            $prestataire->removePromotion($this);
+        }
 
         return $this;
     }

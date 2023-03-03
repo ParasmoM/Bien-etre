@@ -19,6 +19,15 @@ class Images
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $nom = null;
 
+    #[ORM\ManyToOne(inversedBy: 'images')]
+    private ?Categories $categorie = null;
+
+    #[ORM\ManyToOne(inversedBy: 'images')]
+    private ?Internaute $internaute = null;
+
+    #[ORM\ManyToOne(inversedBy: 'images')]
+    private ?Prestataire $prestataire = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -44,6 +53,42 @@ class Images
     public function setNom(?string $nom): self
     {
         $this->nom = $nom;
+
+        return $this;
+    }
+
+    public function getCategorie(): ?Categories
+    {
+        return $this->categorie;
+    }
+
+    public function setCategorie(?Categories $categorie): self
+    {
+        $this->categorie = $categorie;
+
+        return $this;
+    }
+
+    public function getInternaute(): ?Internaute
+    {
+        return $this->internaute;
+    }
+
+    public function setInternaute(?Internaute $internaute): self
+    {
+        $this->internaute = $internaute;
+
+        return $this;
+    }
+
+    public function getPrestataire(): ?Prestataire
+    {
+        return $this->prestataire;
+    }
+
+    public function setPrestataire(?Prestataire $prestataire): self
+    {
+        $this->prestataire = $prestataire;
 
         return $this;
     }

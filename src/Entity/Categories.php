@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CategoriesRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -25,6 +27,18 @@ class Categories
 
     #[ORM\Column(nullable: true)]
     private ?bool $valide = null;
+
+    #[ORM\OneToMany(mappedBy: 'categorie', targetEntity: Images::class)]
+    private Collection $images;
+
+    #[ORM\OneToMany(mappedBy: 'categorie', targetEntity: Promotion::class)]
+    private Collection $promotions;
+
+    public function __construct()
+    {
+        $this->images = new ArrayCollection();
+        $this->promotions = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -75,6 +89,66 @@ class Categories
     public function setValide(?bool $valide): self
     {
         $this->valide = $valide;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Images>
+     */
+    public function getImages(): Collection
+    {
+        return $this->images;
+    }
+
+    public function addImage(Images $image): self
+    {
+        if (!$this->images->contains($image)) {
+            $this->images->add($image);
+            $image->setCategorie($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImage(Images $image): self
+    {
+        if ($this->images->removeElement($image)) {
+            // set the owning side to null (unless already changed)
+            if ($image->getCategorie() === $this) {
+                $image->setCategorie(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Promotion>
+     */
+    public function getPromotions(): Collection
+    {
+        return $this->promotions;
+    }
+
+    public function addPromotion(Promotion $promotion): self
+    {
+        if (!$this->promotions->contains($promotion)) {
+            $this->promotions->add($promotion);
+            $promotion->setCategorie($this);
+        }
+
+        return $this;
+    }
+
+    public function removePromotion(Promotion $promotion): self
+    {
+        if ($this->promotions->removeElement($promotion)) {
+            // set the owning side to null (unless already changed)
+            if ($promotion->getCategorie() === $this) {
+                $promotion->setCategorie(null);
+            }
+        }
 
         return $this;
     }
