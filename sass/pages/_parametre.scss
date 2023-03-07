@@ -1,0 +1,137 @@
+.parametre__avatar {
+    .form-profil {
+        width: 256px;
+        // border: solid;
+    }
+
+    .profil-photo {
+        position: relative;
+
+        > div {
+            height: 10rem;
+            width: 10rem;
+            border: solid .5rem white;
+            border-radius: 50%;
+            background-color: rgb(105, 210, 231);
+            box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset, rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+            // box-shadow: rgba(0, 0, 0, 0.16) 0px 0px 10px;
+            overflow: hidden;
+            margin: auto;
+
+            &:hover {
+                box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+                cursor: pointer;
+            }
+        }
+
+    }
+    
+    input[type="file"] {
+        position: absolute;
+        left: -99999px;
+    }
+
+    svg {
+        cursor: pointer;
+        height: 3rem;
+        position: absolute;
+        bottom: 1rem;right: 7rem;
+        color: #000000;
+
+        &:hover {
+            color: #178800;
+        }
+    }
+    
+    form p {
+        // height: 10rem;
+        // width: 10rem;
+        // position: absolute;
+        // top: 0px;
+        // color: black;
+        // z-index: 10000;
+        // border: solid;
+        // font-size: 40px;
+        // z-index: 100;
+    }
+}
+// .dashboard--avatar {
+//     width: 256px;
+// } 
+
+// .dashboard--avatar > div {
+//     height: 10rem;
+//     width: 10rem;
+//     border: solid white .6rem;
+//     overflow: hidden;
+//     margin: auto;
+//     border-radius: 50%;
+//     box-shadow: rgba(0, 0, 0, 0.16) 0px 0px 10px;
+// }
+.parametre__sidebar {
+    width: 256px;
+    border-radius: 20px;
+    background-color: white;
+    padding: 1.6rem;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 99px;
+    font-size: 1.4rem;
+
+    a {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+        padding: .75rem 4rem;
+        border-radius: 20px;
+
+        &:hover {
+            background-color: #F3F5F8;
+        }
+    }
+
+    span {
+        padding-top: .2rem;
+    }
+    
+}
+
+.parametre__section {
+    border-radius: 20px;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 99px;
+    padding: 1.6rem;
+
+    form {
+        // background-color: #F3F5F8;
+        padding: 1.6rem;
+        border-radius: 20px;
+        // box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 99px;
+    }
+
+    form h3 {
+        padding-left: 2rem;
+        margin-bottom: 1.6rem;
+    }
+    .form-items {
+        display: flex;
+        gap: 1.6rem;
+        margin-bottom: 1.6rem;
+
+        input, select {
+            flex: 1;
+            background-color: white;
+            border-radius: 10px;
+            border: solid 1px #DBE2E8;
+            box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 99px;
+            padding: 1.3rem 2rem .7rem;
+        }
+        button {
+            flex: 1;
+            background: rgb(207,196,255);
+            background: linear-gradient(90deg, rgba(207,196,255,1) 0%, rgba(162,211,245,1) 100%);
+            border-radius: 10px;
+            border: solid 1px white;
+            cursor: pointer;
+            box-shadow: rgba(73, 93, 108, 0.11) 0px 1px 4px;
+        }
+    }
+}

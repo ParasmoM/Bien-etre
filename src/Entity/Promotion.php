@@ -40,7 +40,7 @@ class Promotion
     #[ORM\ManyToOne(inversedBy: 'promotions')]
     private ?Categories $categorie = null;
 
-    #[ORM\ManyToMany(targetEntity: Prestataire::class, mappedBy: 'promotion')]
+    #[ORM\ManyToMany(targetEntity: Prestataire::class, mappedBy: 'promotion', cascade: ['persist'])]
     private Collection $prestataires;
 
     public function __construct()
@@ -48,6 +48,18 @@ class Promotion
         $this->prestataires = new ArrayCollection();
     }
 
+    public function getDescriptionTronquee(int $longueur): string
+    {
+        $description = $this->getDescription();
+        if ($description) {
+            if (mb_strlen($description) > $longueur) {
+                $description = mb_substr($description, 0, $longueur - 3) . '...';
+            }
+            return $description;
+        }
+        return ' ';
+    }
+    
     public function getId(): ?int
     {
         return $this->id;

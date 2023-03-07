@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\UtilisateurRepository;
+use DateTime;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -48,10 +49,10 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(nullable: true)]
     private ?bool $banni = null;
 
-    #[ORM\ManyToOne(inversedBy: 'utilisateurs')]
+    #[ORM\ManyToOne(inversedBy: 'utilisateurs', cascade: ["persist"])]
     private ?Internaute $internaute = null;
 
-    #[ORM\ManyToOne(inversedBy: 'utilisateurs')]
+    #[ORM\ManyToOne(inversedBy: 'utilisateurs', cascade: ["persist"])]
     private ?Prestataire $prestataire = null;
 
     #[ORM\ManyToOne(inversedBy: 'utilisateurs')]
@@ -65,6 +66,13 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
+
+    public function __construct()
+    {
+        $this->inscription = new DateTime();
+        $this->essais = 0;
+        $this->banni = false;
+    }
 
     public function getId(): ?int
     {

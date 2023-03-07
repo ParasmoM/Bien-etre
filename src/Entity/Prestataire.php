@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Trait\ToStringCompletTrait;
 use App\Repository\PrestataireRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -10,6 +11,8 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: PrestataireRepository::class)]
 class Prestataire
 {
+    use ToStringCompletTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -33,10 +36,10 @@ class Prestataire
     #[ORM\OneToMany(mappedBy: 'prestataire', targetEntity: Utilisateur::class)]
     private Collection $utilisateurs;
 
-    #[ORM\OneToMany(mappedBy: 'prestataire', targetEntity: Images::class)]
+    #[ORM\OneToMany(mappedBy: 'prestataire', targetEntity: Images::class, cascade: ['persist'])]
     private Collection $images;
 
-    #[ORM\ManyToMany(targetEntity: Promotion::class, inversedBy: 'prestataires')]
+    #[ORM\ManyToMany(targetEntity: Promotion::class, inversedBy: 'prestataires', cascade: ['persist'])]
     private Collection $promotion;
 
     #[ORM\ManyToMany(targetEntity: Stage::class, inversedBy: 'prestataires')]

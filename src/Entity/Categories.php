@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Trait\ToStringTrait;
 use App\Repository\CategoriesRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -11,6 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: CategoriesRepository::class)]
 class Categories
 {
+    use ToStringTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -40,6 +43,15 @@ class Categories
         $this->promotions = new ArrayCollection();
     }
 
+    public function getDescriptionTronquee(int $longueur): string
+    {
+        $description = $this->getDescription();
+        if (mb_strlen($description) > $longueur) {
+            $description = mb_substr($description, 0, $longueur - 3) . '...';
+        }
+        return $description;
+    }
+    
     public function getId(): ?int
     {
         return $this->id;

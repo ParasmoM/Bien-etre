@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello DashboardController!{% endblock %}
+
+{% block body %}
+<div class="dashboard">
+    <div class="dashboard__container">
+
+        <div class="dashboard__header">
+            {% block avatar %}{% endblock avatar %}
+        </div>
+
+        <div class="dashboard__main">
+
+            <div class="dashboard__sidebar">
+                {% block sidebar %}{% endblock sidebar %}
+            </div>
+
+            <div class="dashboard__section">
+                {% block section %}{% endblock section %}
+            </div>
+
+        </div>
+
+    </div>
+</div>
+{% endblock %}

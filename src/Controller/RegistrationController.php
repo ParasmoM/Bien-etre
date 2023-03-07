@@ -4,8 +4,10 @@ namespace App\Controller;
 
 use App\Entity\Utilisateur;
 use App\Form\RegistrationFormType;
+use App\Repository\CategoriesRepository;
 use App\Repository\UtilisateurRepository;
 use App\Security\EmailVerifier;
+use App\Utils\Utils;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -26,29 +28,58 @@ class RegistrationController extends AbstractController
         $this->emailVerifier = $emailVerifier;
     }
 
-    #[Route('/register', name: 'app_register')]
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
+    #[Route('/register/{status}', name: 'app_register', methods: ['GET', 'POST'])]
+    public function register($status, Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, CategoriesRepository $categoriesRepository): Response
     {
+        // On recupère la liste des services
+        $categories = Utils::allCateg($categoriesRepository);
+
         $user = new Utilisateur();
-        $form = $this->createForm(RegistrationFormType::class, $user);
-        $form->handleRequest($request);
+        $registrationForm = $this->createForm(RegistrationFormType::class, $user, [
+            'attr' => [
+                'class' => 'form-internaute'
+            ]
+        ]);
+        $registrationForm->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        // On crée l'instance en fonction du status 
+        $class = ucfirst($status);
+        $className = 'App\Entity\\' . $class;
+        $utilisateur = new $className();
+
+        // On crée le formulaire en fonction du status 
+        $type = $class . 'FormType';
+        $formType = 'App\Form\\' . $type;
+        $utilisateurForm = $this->createForm($formType, $utilisateur, [
+            'attr' => [
+                'class' => 'form-' . $status,
+            ]
+        ]);
+
+        $utilisateurForm->handleRequest($request);
+
+        if ($registrationForm->isSubmitted() && $registrationForm->isValid() || $utilisateurForm->isSubmitted() && $utilisateurForm->isValid()) {
+            $methodName = 'set' . $class;
+
             // encode the plain password
-            $user->setPassword(
-                $userPasswordHasher->hashPassword(
-                    $user,
-                    $form->get('plainPassword')->getData()
+            $user
+                ->setPassword(
+                    $userPasswordHasher->hashPassword(
+                        $user,
+                        $registrationForm->get('plainPassword')->getData()
+                    )
                 )
-            );
-
+                ->setTypeUtilisateur($class)
+                ->$methodName($utilisateur)
+            ;
+            
             $entityManager->persist($user);
             $entityManager->flush();
 
             // generate a signed url and email it to the user
             $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
                 (new TemplatedEmail())
-                    ->from(new Address('parasmomarco@hotmail.be', 'Parasmo Marco'))
+                    ->from(new Address('parasmomarco@hotmail.com', 'Parasmo Marco'))
                     ->to($user->getEmail())
                     ->subject('Please Confirm your Email')
                     ->htmlTemplate('registration/confirmation_email.html.twig')
@@ -58,9 +89,12 @@ class RegistrationController extends AbstractController
             return $this->redirectToRoute('app_login');
         }
 
-        return $this->render('registration/register.html.twig', [
-            'registrationForm' => $form->createView(),
-        ]);
+        return $this->render('registration/register.html.twig', compact(
+            'categories', 
+            'status',
+            'registrationForm',
+            'utilisateurForm',
+        ));
     }
 
     #[Route('/verify/email', name: 'app_verify_email')]
@@ -90,6 +124,6 @@ class RegistrationController extends AbstractController
         // @TODO Change the redirect on success and handle or remove the flash message in your templates
         $this->addFlash('success', 'Your email address has been verified.');
 
-        return $this->redirectToRoute('app_register');
+        return $this->redirectToRoute('app_login');
     }
 }

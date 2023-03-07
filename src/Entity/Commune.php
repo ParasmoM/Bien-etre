@@ -26,6 +26,8 @@ class Commune
         $this->utilisateurs = new ArrayCollection();
     }
 
+    public function __toString(){return $this->commune;}
+
     public function getId(): ?int
     {
         return $this->id;

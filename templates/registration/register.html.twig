@@ -3,19 +3,31 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
-    {% for flash_error in app.flashes('verify_email_error') %}
-        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
-    {% endfor %}
+<div class="register">
+    <div class="register__container">
+        <div class="register__text">
+            <h2>Créer votre identifiant WorkSpace comme {{ status }}</h2>
+            <p>
+                Vous avez déjà un identifiant Work Space ?
+            </p>
+            <a href="{{ path('app_login') }}">Connectez-vous ici ></a>
+            {% if status == 'internaute' %}
+            <a href="{{ path('app_register', {status: 'prestataire'}) }}">Créer votre identifiant comme prestataire ></a>
+            {% endif %}
+        </div>
+        <form action="{{ path('app_register', {status: status}) }}" method="post" class="register__form">
+            {{ form_widget(utilisateurForm.nom, {'attr': {'placeholder': 'Entrez votre nom'}}) }}
+            {{ form_widget(utilisateurForm.prenom, {'attr': {'placeholder': 'Entrez votre prénom'}}) }}
+            {{ form_widget(registrationForm.email, {'attr': {'placeholder': 'Entrez votre email'}}) }}
+            {{ form_widget(registrationForm.plainPassword, {'attr': {'placeholder': 'Mot de passe'}}) }}
+            {{ form_row(registrationForm.agreeTerms, {'label': 'J’accepte les termes d’utilisation', 'attr': {'class': 'agreeTerms'}, 'row_attr': {'class': 'my-agreeTerms'}}) }}
+            {{ form_widget(utilisateurForm._token) }}
+            <button>S'inscrire</button>
+        </form>
+    </div>
+</div>
 
-    <h1>Register</h1>
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
 
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+
 {% endblock %}

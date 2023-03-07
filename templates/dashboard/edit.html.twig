@@ -1,0 +1,22 @@
+{% extends 'dashboard/_dashboard.html.twig' %}
+
+{% block title %}Hello DashboardController!{% endblock %}
+
+{% block section %}
+<section class="dashboard__edit">
+    <h3>Edit</h3>
+    <a href="{{ app.request.headers.get('referer') }}" class="btn btn-primary">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
+            <path fill="currentColor" d="m14.2 6l-6 6l6 6l1.41-1.41L11.03 12l4.58-4.59z"/>
+        </svg>
+    </a>
+
+
+    {{ form_start(form|default('form')) }}
+    {{ form_widget(form|default('form')) }}
+    <button class="btn">{{ button_label|default('Save') }}</button>
+    {{ form_end(form|default('form')) }}
+
+    
+</section>
+{% endblock section %}

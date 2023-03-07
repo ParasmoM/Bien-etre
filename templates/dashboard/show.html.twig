@@ -1,0 +1,30 @@
+{% extends 'dashboard/_dashboard.html.twig' %}
+
+{% block title %}Hello DashboardController!{% endblock %}
+
+{% block section %}
+<section class="dashboard__show">
+    <h3>Nos {{ type }}</h3>
+    
+
+    <article>
+        <a href="{{ app.request.headers.get('referer') }}" class="btn btn-primary">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
+                <path fill="currentColor" d="m14.2 6l-6 6l6 6l1.41-1.41L11.03 12l4.58-4.59z"/>
+            </svg>
+        </a>
+        <div>
+            <p>
+                <span>Nom service : </span><span>{{ promotion.categorie.nom }}</span>
+            </p>
+            <p>
+                <span>Autheur du service : </span><span>{{ promotion.nom }}</span>
+            </p>
+            <p>
+                <span>Description : </span><span>{{ promotion.description }}</span>
+            </p>
+        </div>
+    </article>
+</section>
+{# {{ dump() }} #}
+{% endblock section %} 

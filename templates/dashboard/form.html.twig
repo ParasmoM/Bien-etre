@@ -1,0 +1,53 @@
+{% extends 'dashboard/_dashboard.html.twig' %}
+
+{% block title %}Hello DashboardController!{% endblock %}
+
+{% if type == 'promotion' %}{% set val = 'service' %}{% else %}{% set val = type %}{% endif %}
+{% block section %}
+<section class="dashboard__form">
+    <h3>Créer un {{ type }}</h3>
+    <form action="{{ path('dashboard_form', {type: type}) }}" method="post">
+        <div class="dashboard-input">
+            {% if val == 'service' %}
+                {{ form_widget(form.categorie) }}
+                {{ form_widget(form.debut) }}
+                {{ form_widget(form.fin) }}
+            {% else %}
+                {{ form_widget(form.infos, {'attr': {'placeholder' : 'Infos supplementaires'}}) }}
+                {{ form_widget(form.debut) }}
+                {{ form_widget(form.fin) }}
+            {% endif %}
+        </div>
+
+        {{ form_widget(form.nom, {'attr': {'placeholder' : 'Titre'}}) }}
+
+        {{ form_widget(form.description, {'attr': {'placeholder' : 'Description du ' ~ type|capitalize, 'rows': '14', 'style': 'resize: none;'   }}) }}
+
+        <div class="dashboard-button">
+            {% if val == 'service' %}
+            <div class="file-input">
+                <label for="">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18" height="18.006" viewBox="0 0 24 24.006">
+                        <defs>
+                            <clipPath id="clip-path">
+                                <rect id="Rectangle_650" data-name="Rectangle 650" width="24" height="24.006" transform="translate(0 0)" fill="#5d4e91"/>
+                            </clipPath>
+                        </defs>
+                        <g id="Groupe_784" data-name="Groupe 784" transform="translate(0 0)">
+                            <g id="Groupe_783" data-name="Groupe 783" clip-path="url(#clip-path)">
+                                <path id="Tracé_231" data-name="Tracé 231" d="M6.038,6.956a1,1,0,0,1,0-1.413l5.25-5.25a1.013,1.013,0,0,1,1.424,0l5.25,5.25a1,1,0,0,1-1.414,1.424l-.01-.011L13,3.419V15.006a1,1,0,1,1-2,0V3.419L7.462,6.956a1,1,0,0,1-1.414.011l-.01-.011M23,14.006a1,1,0,0,0-1,1v7H2v-7a1,1,0,0,0-2,0v7a2,2,0,0,0,2,2H22a2,2,0,0,0,2-2v-7a1,1,0,0,0-1-1" fill="#5d4e91"/>
+                            </g>
+                        </g>
+                    </svg>
+                    {{ form.pdf.vars.label }}
+                </label>
+                {{ form_widget(form.pdf, {'attr': {'class': 'custom-file-input'}}) }}
+            </div>
+            {% endif %}
+
+            {{ form_widget(form._token) }}
+            <button>Publier</button>
+        </div>
+    </form>
+</section>
+{% endblock section %} 
