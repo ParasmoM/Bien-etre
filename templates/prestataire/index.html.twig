@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello PrestataireController!{% endblock %}
+
+{% block javascripts %}
+{# {{ parent() }} #}
+
+<script src="{{ asset('js/filters.js') }}" defer></script>
+{% endblock %}
+
+{% set path = 'prestataire_index' %}
+{% set pages = prestataires.totalPages %}
+{% set currentPage = prestataires.currentPage %}
+
+{% block body %}
+<main class="prestataire-page">
+    {{ include('_partials/_search-bar.html.twig') }}
+    <div class="container">
+        {% for prestataire in prestataires.items %}
+        <div class="prestataire-card">
+            <div>
+                {% for image in prestataire.images %}
+                <img src="{{ asset('assets/uploads/prestataire/' ~ image.nom) }}" alt="">   
+                {% endfor %}
+                <div></div>
+            </div>
+
+            <p>{{ prestataire.nom }} {{ prestataire.prenom }}</p>
+
+            {% for row in prestataire.utilisateurs %}
+            <p>{{ row.email }}</p>
+            {% endfor %}
+
+            <a href="{{ path('prestataire_show', {id: prestataire.id}) }}">
+                Voir les profil
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+    {% include "_partials/_pagination.html.twig" %}
+</main>
+{{ dump() }}
+{% endblock %}

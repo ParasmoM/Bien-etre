@@ -29,15 +29,28 @@ class DashboardController extends AbstractController
         // On récupère l'instance image
         $image = Utils::getImage($user, $imagesRepository);
 
-        $type = ($type == 'service') ? 'promotion' : $type;
-        $repositoryName = 'App\Entity\\' . ucfirst($type);
-        $repository = $entityManager->getRepository($repositoryName);
-        $results = $repository->findAll();  
 
+        if($type == 'service') {
+            $query = $entityManager->createQuery(
+                'SELECT p, pp FROM App\Entity\Promotion p
+                JOIN p.prestataires pp
+                WHERE pp.id = :prestataireId'
+            )->setParameter('prestataireId', $user->getPrestataire()->getId());
+
+        } else {
+            $query = $entityManager->createQuery(
+                'SELECT p, pp FROM App\Entity\Stage p
+                JOIN p.prestataires pp
+                WHERE pp.id = :prestataireId'
+            )->setParameter('prestataireId', $user->getPrestataire()->getId());
+        }
+        $results = $query->getResult();
+        
         return $this->render('dashboard/index.html.twig', compact(
             'categories',
             'image',
-            'results'
+            'results',
+            'type',
         ));
     }
 
@@ -132,7 +145,7 @@ class DashboardController extends AbstractController
         $form->handleRequest($request); 
         
         if ($this->isCsrfTokenValid('delete'.$promotion->getId(), $request->request->get('_token'))) {
-            dd('ici');
+            
             $promotionRepository->remove($promotion, true);
         }
         return $this->redirectToRoute('dashboard_index', ['type' => 'service'], Response::HTTP_SEE_OTHER);

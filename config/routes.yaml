@@ -3,3 +3,6 @@ controllers:
         path: ../src/Controller/
         namespace: App\Controller
     type: attribute
+prestataire_test:
+    path: /prestataire/test
+    controller: App\Controller\PrestataireController

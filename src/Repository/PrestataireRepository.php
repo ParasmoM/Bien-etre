@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Prestataire;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -19,6 +20,40 @@ class PrestataireRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Prestataire::class);
+    }
+
+    public function  findPrestatairesPaginated(int $page, int $limit = 8): array
+    {
+        $limit = abs($limit);
+
+        // Calculez l'offset pour la pagination
+        $offset = ($page - 1) * $limit;
+    
+        $query = $this->createQueryBuilder('p')
+            ->orderBy('p.id', 'DESC')
+            ->setMaxResults($limit)
+            ->setFirstResult($offset)
+            ->getQuery(); // Obtenez la requête
+    
+        // Créez un nouvel objet Paginator avec la requête
+        $paginator = new Paginator($query);
+    
+        // Obtenez le nombre total d'éléments
+        $totalItems = count($paginator);
+    
+        // Calculez le nombre total de pages
+        $totalPages = ceil($totalItems / $limit);
+    
+        // Obtenez les résultats paginés
+        $result = $paginator->getQuery()->getResult();
+    
+        // Retournez les résultats et les informations de pagination
+        return [
+            'items' => $result,
+            'totalItems' => $totalItems,
+            'totalPages' => $totalPages,
+            'currentPage' => $page,
+        ];
     }
 
     public function save(Prestataire $entity, bool $flush = false): void

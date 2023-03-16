@@ -1,11 +1,83 @@
-<h1>Hi! Please confirm your email!</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        .email-confirm {
+            @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;700;900&display=swap');
+            font-family:  'Roboto', sans-serif;
+            text-align: justify;
+            color: white;
+        }
+        .email-confirm .container {
+            background-color: #2d2a41;
+            max-width: 600px;
+            border: solid 1px;
+            margin: 0 auto;
+            padding: 3rem 4rem;
+        }
+        .email-confirm .logo {
+            text-transform: uppercase;
+            font-weight: 900;
+            font-size: 3rem;
+        }
+        .email-confirm .logo span {
+            font-weight: 100;
+        }
+        .email-confirm p:first-of-type {
+            font-weight: 700;
+            font-size: 1.8rem;
+            padding: 2rem 0;
+        }        
+        .email-confirm .btn {
+            background-color: #1B192B;
+            width: 100%;
+            padding: 2rem;
+        }        
+        .email-confirm .btn button {
+            background-color: rgb(5, 73, 116);
+            padding: 2rem 3rem;
+            border-radius: 5px;
+            margin: 0 auto;
+            display: block;
+        }        
+        .email-confirm p:nth-of-type(2) {
+            padding: 2rem 0;
+            font-size: 1.4rem;
+        }
+        .email-confirm p:nth-of-type(3) {
+            font-size: 1.4rem;
+        }
+        .email-confirm a {
+            text-decoration: none;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    
+<div class="email-confirm">
+    <div class="container">
+        <div class="logo">
+            Bien<span>Être</span>
+        </div>
+        <p>
+            Félicitations pour votre inscription à notre plateforme ! Pour accéder à toutes les fonctionnalités de notre service, veuillez confirmer votre adresse e-mail en cliquant sur le lien ci-dessous.
+        </p>
+        <div class="btn">
+            <button>
+                <a href="{{ signedUrl|raw }}">VÉRIFIEZ MON ADRESSE E-MAIL</a>
+            </button>
+        </div>
+        <p>
+            Une fois votre adresse e-mail vérifiée, vous pourrez profiter de tous les avantages de notre plateforme, des promotions spéciales et bien plus encore.
+        </p>
+        <p>
+            N'hésitez pas à nous contacter si vous avez des questions ou des préoccupations. Merci de faire partie de notre communauté !
+        </p>
+    </div>
+</div>
 
-<p>
-    Please confirm your email address by clicking the following link: <br><br>
-    <a href="{{ signedUrl|raw }}">Confirm my Email</a>.
-    This link will expire in {{ expiresAtMessageKey|trans(expiresAtMessageData, 'VerifyEmailBundle') }}.
-</p>
 
-<p>
-    Cheers!
-</p>
+{# This link will expire in {{ expiresAtMessageKey|trans(expiresAtMessageData, 'VerifyEmailBundle') }}. #}
+</body>
+</html>

@@ -42,7 +42,7 @@ class Prestataire
     #[ORM\ManyToMany(targetEntity: Promotion::class, inversedBy: 'prestataires', cascade: ['persist'])]
     private Collection $promotion;
 
-    #[ORM\ManyToMany(targetEntity: Stage::class, inversedBy: 'prestataires')]
+    #[ORM\ManyToMany(targetEntity: Stage::class, inversedBy: 'prestataires', cascade: ['persist'])]
     private Collection $stage;
 
     public function __construct()

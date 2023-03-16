@@ -24,6 +24,14 @@
         gap: 2.5rem;
         height: 100%; 
 
+        .btn-prestataire {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: #342020;
+            margin-right: 1.5rem;
+        }
+
         > div {
             display: flex;
             align-items: center;
@@ -58,13 +66,13 @@
     .menu__profil:hover {
         > ul {
             display: block;
-
-            ul {
-                display: none;
-            }
+            color: red;
+            // ul {
+            //     display: none;
+            // }
         }
     }
-
+// 
     .menu__dropdowns:hover {
         li:hover {
             background: rgb(218,234,245);
@@ -79,12 +87,21 @@
         gap: 1rem;
         line-height: 1;
         padding: 4rem 0 3.8rem 0;
+        // border: solid;
+
+        &:hover ul {
+            display: block;
+        }
+
+        // ul:has(.menu__dropdowns--btn:hover) {
+        //     display: block;
+        // }
     }
 
     .menu__dropdowns--dropdowns {
         position: absolute;
         top: 94px;
-        left: -5px;
+        left: 86px;
         border-radius: 10px;
         border: solid 1px #C3BAE9;
         display: none;

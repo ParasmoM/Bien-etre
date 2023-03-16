@@ -24,6 +24,16 @@ class CategoriesFixtures extends Fixture
         }
 
         $manager->flush();
+        
+        $categoriesRepository = $manager->getRepository(Categories::class);
+        $categ = $categoriesRepository->findAll();
+
+        $randomIndex = array_rand($categ);
+        $randomCategory = $categ[$randomIndex];
+
+        $randomCategory->setEnAvant(true);
+        $manager->persist($randomCategory);
+        $manager->flush();
     }
 
     public function createCategories($nom, ObjectManager $manager) {

@@ -19,7 +19,6 @@
         }
     }
 
-
     .content-categ {
         max-width: 1440px;
         width: calc(100% - 15rem);
@@ -28,6 +27,61 @@
         gap: 3rem;
         padding: 70px 0;
         position: relative;
+
+        > div:last-child {
+            // border: solid 1px;
+            width: calc(100% - 420px);
+            margin-left: auto;
+
+            > div:last-child {
+                margin-top: 5rem;
+                display: flex;
+                gap: 2rem;
+                flex-wrap: wrap;
+
+                .card {
+                    // border: solid 1px;
+                    flex: 0 1 214px;
+                    border-radius: 15px;
+                    background-color: white;
+                    box-shadow: rgba(223, 233, 245, 1) 0px 10px 10px;
+                    padding: 2rem;
+
+                }
+                .card-heard {
+                    display: flex;
+                    gap: 1rem;
+
+                    > div:first-child {
+                        height: 5rem;
+                        width: 5rem;
+                        border-radius: 50%;
+                        border: solid 4px white;
+                        overflow: hidden;
+                        box-shadow: rgba(0, 0, 0, 0.16) 0px 0px 10px;
+
+                    }
+
+                    p {
+                        color: #6E6488;
+                    }
+
+                    .card-socials {
+                        border-top: solid 1px #DCE2E7;
+                        // border-bottom: solid 1px #DCE2E7;
+                        padding: 1rem 0 .5rem;
+                        margin-top: .5rem;
+                    }
+                }
+
+                .card-main {
+                    padding: 2rem 1rem 0;
+                    text-align: center;
+                    border-top: solid 1px #DCE2E7;
+                    color: #828282;
+                }
+            }
+        }
     }
 
     .sidebar-categ {
@@ -62,8 +116,7 @@
     }
 
     .text-categ {
-        width: calc(100% - 420px);
-        margin-left: auto;
+        // border: solid red;
 
         h2 {
             font-size: 2rem;

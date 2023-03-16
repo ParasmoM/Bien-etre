@@ -40,7 +40,7 @@ class Stage
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $affichageJusque = null;
 
-    #[ORM\ManyToMany(targetEntity: Prestataire::class, mappedBy: 'stage')]
+    #[ORM\ManyToMany(targetEntity: Prestataire::class, mappedBy: 'stage', cascade: ['persist'])]
     private Collection $prestataires;
 
     public function __construct()
@@ -48,6 +48,21 @@ class Stage
         $this->prestataires = new ArrayCollection();
     }
 
+    public function getDescriptionTronquee(int $longueur): string
+    {
+        $description = $this->getDescription();
+        if ($description) {
+            if (mb_strlen($description) > $longueur) {
+                $description = mb_substr($description, 0, $longueur - 3) . '...';
+            }
+            return $description;
+        }
+        return ' ';
+    }
+    public function __toString()
+    {
+        return $this->nom;
+    }
     public function getId(): ?int
     {
         return $this->id;

@@ -1,0 +1,241 @@
+.prestataire-page {
+    background-color: #EAF0F8;
+    
+    .container {
+        max-width: 1440px;
+        width: calc(100% - 15rem);
+        margin: 0 auto;
+        display: flex;
+        flex-wrap: wrap;
+        place-content: center;
+        padding-top: 5rem;
+        gap: 3rem;
+    }
+
+    .prestataire-card {
+        flex: 0 1 225px;
+        padding: 2rem;
+        text-align: center;
+        border-radius: 10px;
+        border: solid 2px white;
+        // transition: all 3.s ease;
+
+        p:first-of-type {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-top: 2rem;
+        }
+        p:last-of-type {
+            margin-bottom: 2rem;
+        }
+
+        a {
+            background: rgb(207,196,255);
+            background: linear-gradient(90deg, rgba(207,196,255,1) 0%, rgba(162,211,245,1) 100%);
+            border-radius: 10px;
+            border: solid 1px white;
+            cursor: pointer;
+            box-shadow: rgba(73, 93, 108, 0.11) 0px 1px 4px;
+            padding: 1rem 2rem;
+        }
+
+        &:hover {
+            transform: scale(1.025);
+            background-color: #fafaff;
+            box-shadow: rgba(223, 233, 245, 1) 0px 10px 10px;
+        }
+    }
+
+    .prestataire-card > div {
+        height: 15rem;
+        width: 15rem;
+        border-radius: 50%;
+        margin: auto;
+        position: relative;
+
+        img {
+            object-fit: cover;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+        }
+
+        div {
+            border: solid 2px white;
+            height: 14rem;
+            width: 14rem;
+            border-radius: 50%;
+            position: absolute;
+            top: .5rem;
+            left: .5rem;
+        }
+    }
+
+    .pagination {
+        max-width: 1440px;
+        width: calc(100% - 15rem);
+        margin: 0 auto;
+        display: flex;
+        justify-content: center;
+        padding-top: 5rem;
+
+
+        ul {
+            display: flex;
+            gap: .5rem;
+            margin: auto;
+            font-size: 1.4rem;
+        }
+
+        .page-item {
+            background-color: #fefefe;
+            border-radius: 1rem;
+            height: 3rem;
+            width: 3rem;
+
+            &.active {
+                background-color: #468ACD;
+                color: white;
+            }
+
+            &.disabled {
+                opacity: .5;
+            }
+        }
+
+        .page-link {
+            padding-top: 5px;
+            height: 100%;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            place-content: center;
+        }
+    }
+}
+
+.prestataire-profil {
+    background-color: #EAF0F8;
+
+    .container {
+        max-width: 1440px;
+        width: calc(100% - 15rem);
+        margin: 0 auto;
+        display: flex;
+        gap: 4rem;
+        padding-top: 9rem;
+    }
+
+    .card-profil {
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+        gap: 1rem;
+        width: 25rem;
+        height: fit-content;
+        padding: 3rem;;
+        border-radius: 20px;
+        background-color: #fafaff;
+        box-shadow: rgba(223, 233, 245, 1) 0px 10px 10px;
+
+        > div {
+            border-radius: 2rem;
+            height: 20rem;
+            width: 19rem;
+            overflow: hidden;
+        }
+
+        img {
+            object-fit: contain;
+        }
+    }
+
+    .contente {
+        display: flex;
+        flex-flow: column;
+        gap: 4rem;
+        flex: 0 1 calc(100% - 29rem);
+    }
+
+    .banner {
+        display: flex;
+        gap: 1rem;
+        height: 25rem;
+        
+        .card {
+            border-radius: 2rem;
+            height: 100%;
+            flex: 1;
+            transition: .3s all ease;
+            overflow: hidden;
+            background: #ffffff;
+            box-shadow:  1px 1px 5px #b3b3b3,
+                        -5px -5px 10px #ffffff;
+
+            &:hover {
+                flex: 4;
+            }
+
+            img {
+                object-fit: cover;
+                height: 100%;
+                width: 100%;
+            }
+        }
+    }
+
+    .menu {
+        display: flex;
+        width: 30rem;
+        margin: 4rem auto 0;
+        border-bottom: solid 1px #cccccc;
+
+        button {
+            flex: 1;
+            padding: 1rem;
+            background-color: inherit;
+        }
+        .active {
+            border-bottom: solid #cccccc;
+        }
+
+        
+    }
+
+    .service,
+    .stage {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 3rem;
+
+        &.no-show {
+            display: none;
+        }
+    }
+
+    .service-card, 
+    .stage-card {
+        flex: 0 1 214px;
+        border-radius: 15px;
+        background-color: #FFFFFF;
+        box-shadow: rgba(223, 233, 245, 1) 0px 10px 10px;
+        padding: 2rem;
+        display: flex;
+        flex-flow: column;
+        gap: 3rem;
+        text-align: center;
+    }
+
+    .stage-card .card-footer {
+        font-size: 1.6rem;
+
+        div {
+            display: inline-block;
+            padding: 1.2rem 2rem .8rem;
+            border-radius: 10px;
+            background-color: #468ACD;
+            color: white;
+            font-weight: 600;
+        }
+    }
+}
