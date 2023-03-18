@@ -1,0 +1,26 @@
+{% set path = 'prestataire_index' %}
+{% set pages = prestataires.totalPages %}
+{% set currentPage = prestataires.currentPage %}
+<div class="container" id="prestataire_card">
+    {% for prestataire in prestataires.items %}
+    <div class="prestataire-card">
+        <div>
+            {% for image in prestataire.images %}
+            <img src="{{ asset('assets/uploads/prestataire/' ~ image.nom) }}" alt="">   
+            {% endfor %}
+            <div></div>
+        </div>
+    
+        <p>{{ prestataire.nom }} {{ prestataire.prenom }}</p>
+    
+        {% for row in prestataire.utilisateurs %}
+        <p>{{ row.email }}</p>
+        {% endfor %}
+    
+        <a href="{{ path('prestataire_show', {id: prestataire.id}) }}">
+            Voir les profil
+        </a>
+    </div>
+    {% endfor %}
+    {% include "_partials/_pagination.html.twig" %}
+</div>

@@ -9,7 +9,7 @@
             </div>
             <div class="searchBar__select">
                 <select name="category" id="select_category">
-                    <option value=""> </option>
+                    <option value="all"> </option>
                     {% for categorie in categories %}
                     <option value="{{ categorie }}">{{ categorie }}</option>
                     {% endfor %}
@@ -23,6 +23,38 @@
         <input type="text" placeholder="Localité">
         <input type="text" placeholder="Code postal">
         <input type="submit" value="Recherche">
+
+        {% set page = currentPage ? currentPage : '' %}
         <input type="hidden" name="page" value="{{ currentPage }}">
     </form>
 </section>
+
+{# {% set queryParams = app.request.query.all %}
+{% set queryString = queryParams|filter((v, k) => k != 'page')|url_encode %}
+<section class="searchBar" id="searchBar">
+    <form class="searchBar__container" id="search_bar">
+        <div>
+            <div class="searchBar__input">
+                <input type="text" placeholder="Qui recherchez-vous ?">
+            </div>
+            <div class="searchBar__select">
+                <select name="categories" id="select_category">
+                    <option value="all"></option>
+                    {% for categorie in categories %}
+                    {# {% if queryParams is not empty and queryParams.categories is not empty %}
+                        {% set checked = (categorie.nom in queryParams.categories) ? "checked" : "" %}
+                    {% else %}
+                        {% set checked = "" %}
+                    {% endif %} 
+                    <option value="{{ categorie }}">{{ categorie }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <input type="text" placeholder="Commune">
+        <input type="text" placeholder="Localité">
+        <input type="text" placeholder="Code postal">
+        <input type="submit" value="Recherche">
+        <input type="hidden" name="page" value="{{ currentPage }}">
+    </form>
+</section> #}

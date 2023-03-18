@@ -34,16 +34,26 @@ class PrestataireController extends AbstractController
         // On récupère les filtres 
         $filters = $request->get("category");
 
-        if($filters) {
-            dd($filters);
+        if($filters != null) {
+            // return new JsonResponse($filters);
         }
+        if($filters) {
+            // dd('ok');
+        }
+        // dd($filters);
         // On récupère tout les prestataires paginer
-        $prestataires = $prestataireRepository->findPrestatairesPaginated($page);
-
+        $prestataires = $prestataireRepository->findPrestatairesPaginated($page, 8, $filters);
         // On vérifier si on a une requête ajax 
         if($request->get('ajax')) {
-            return new JsonResponse("ok");
+            return new JsonResponse([
+                'content' => $this->renderView('_partials/_prestataire_card.html.twig', compact(
+                    'categories',
+                    'image',
+                    'prestataires',
+                ))
+            ]);            
         }
+        // dd($prestataires);
         return $this->render('prestataire/index.html.twig', compact(
             'categories',
             'image',

@@ -9,6 +9,10 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PrestataireRepository::class)]
+/**
+ * @ORM\Table(name="Prestataire",indexes={@ORM\Index(columns={"nom"}, flags={"fulltext"})})
+ */
+
 class Prestataire
 {
     use ToStringCompletTrait;

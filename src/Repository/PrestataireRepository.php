@@ -22,39 +22,53 @@ class PrestataireRepository extends ServiceEntityRepository
         parent::__construct($registry, Prestataire::class);
     }
 
-    public function  findPrestatairesPaginated(int $page, int $limit = 8): array
-    {
-        $limit = abs($limit);
+    public function findPrestatairesPaginated(int $page, int $limit = 8, $filters = null): array
+{
+    $limit = abs($limit);
 
-        // Calculez l'offset pour la pagination
-        $offset = ($page - 1) * $limit;
-    
-        $query = $this->createQueryBuilder('p')
-            ->orderBy('p.id', 'DESC')
-            ->setMaxResults($limit)
-            ->setFirstResult($offset)
-            ->getQuery(); // Obtenez la requête
-    
-        // Créez un nouvel objet Paginator avec la requête
-        $paginator = new Paginator($query);
-    
-        // Obtenez le nombre total d'éléments
-        $totalItems = count($paginator);
-    
-        // Calculez le nombre total de pages
-        $totalPages = ceil($totalItems / $limit);
-    
-        // Obtenez les résultats paginés
-        $result = $paginator->getQuery()->getResult();
-    
-        // Retournez les résultats et les informations de pagination
-        return [
-            'items' => $result,
-            'totalItems' => $totalItems,
-            'totalPages' => $totalPages,
-            'currentPage' => $page,
-        ];
+    // Calculez l'offset pour la pagination
+    $offset = ($page - 1) * $limit;
+
+    // Créez la requête de base avec la jointure
+    $queryBuilder = $this->createQueryBuilder('p')
+        ->innerJoin('p.promotion', 'pp')
+        ->innerJoin('pp.categorie', 'c')
+        ->groupBy('p.id')
+        ->orderBy('p.id', 'DESC')
+        ->setMaxResults($limit)
+        ->setFirstResult($offset);
+
+    // Ajoutez la clause WHERE si le paramètre $filters est défini
+    if ($filters !== null && $filters !== "all") {
+        $queryBuilder->where('c.nom = :category')
+            ->setParameter('category', $filters);
     }
+
+    // Obtenez la requête
+    $query = $queryBuilder->getQuery();
+
+    // Créez un nouvel objet Paginator avec la requête
+    $paginator = new Paginator($query);
+
+    // Obtenez le nombre total d'éléments
+    $totalItems = count($paginator);
+
+    // Calculez le nombre total de pages
+    $totalPages = ceil($totalItems / $limit);
+
+    // Obtenez les résultats paginés
+    $result = $paginator->getQuery()->getResult();
+
+    // Retournez les résultats et les informations de pagination
+    return [
+        'items' => $result,
+        'totalItems' => $totalItems,
+        'totalPages' => $totalPages,
+        'currentPage' => $page,
+    ];
+}
+
+
 
     public function save(Prestataire $entity, bool $flush = false): void
     {

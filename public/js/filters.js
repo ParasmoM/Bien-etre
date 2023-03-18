@@ -16,12 +16,23 @@ window.onload = () => {
         const currentURL = new URL(window.location.href);
 
         // On lance la requête ajax
-        fetch(currentURL.pathname + "?" + PARAMS.toString(), {
+        fetch(currentURL.pathname + "?" + PARAMS.toString() + "&ajax=1", {
             headers: {
                 "X-Requested-With": "XMLHttpRequest"
             }
-        }).then(response => {
-            console.log(response);
-        }).catch(e => alert(e));
+        }).then(response => 
+            response.json()
+        ).then(data => {
+            console.log(data.content);
+
+            // On va chercher la zone de contenu 
+            const CONTENT = document.querySelector("#prestataire_card");
+
+            // ON remplace le contenu
+            CONTENT.innerHTML = data.content;
+
+            // On met à jour l'url
+            history.pushState({}, null, currentURL.pathname + "?" + PARAMS.toString());
+        })
     });
 };
